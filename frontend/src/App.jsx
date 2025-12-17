@@ -12,6 +12,8 @@ export default function App() {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
 
   return (
     <>
@@ -31,11 +33,17 @@ export default function App() {
           <Sidebar
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            selectedPriceRanges={selectedPriceRanges}
+            setSelectedPriceRanges={setSelectedPriceRanges}
           />
 
           <div style={{ flex: 1 }}>
             <ProductList
               selectedCategory={selectedCategory}
+              priceRange={priceRange}
+              selectedPriceRanges={selectedPriceRanges}
               onSelectProduct={(product) => {
                 setSelectedProduct(product);
                 setPage("detail");

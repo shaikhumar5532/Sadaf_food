@@ -3,7 +3,9 @@ import axios from "axios";
 
 export default function ProductList({
   selectedCategory = "All",
-  onSelectProduct
+  onSelectProduct,
+  priceRange = { min: "", max: "" },
+  selectedPriceRanges = [],
 }) {
   const [products, setProducts] = useState([]);
 
@@ -14,12 +16,30 @@ export default function ProductList({
   }, []);
 
   // ✅ CATEGORY FILTER
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter(
-          (p) => p.category === selectedCategory
-        );
+  const filteredProducts = products
+    .filter((p) => (selectedCategory === "All" ? true : p.category === selectedCategory))
+    .filter((p) => {
+      const price = Number(p.price ?? 0);
+
+      // if presets selected, match any preset range
+      if (selectedPriceRanges && selectedPriceRanges.length > 0) {
+        return selectedPriceRanges.some((r) => {
+          const min = Number(r.min || 0);
+          const max = r.max === Infinity ? Infinity : Number(r.max);
+          return price >= min && price <= max;
+        });
+      }
+
+      // else use manual min/max
+      const min = Number(priceRange.min);
+      const max = Number(priceRange.max);
+
+      if (!priceRange.min && !priceRange.max) return true;
+      if (priceRange.min && priceRange.max) return price >= min && price <= max;
+      if (priceRange.min) return price >= min;
+      if (priceRange.max) return price <= max;
+      return true;
+    });
 
   return (
     <div style={styles.container}>
