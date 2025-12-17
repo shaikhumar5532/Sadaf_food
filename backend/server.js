@@ -74,6 +74,19 @@ app.get("/api/products", async (req, res) => {
 });
 
 // =======================
+// UPDATE PRODUCT (PDP - EDIT)
+// =======================
+app.put("/api/products/:id", async (req, res) => {
+  const updated = await Product.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+  res.json(updated);
+});
+
+
+// =======================
 // START SERVER
 // =======================
 const PORT = process.env.PORT || 5000;

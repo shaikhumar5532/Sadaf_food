@@ -2,6 +2,7 @@ import { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
 import ProductList from "./ProductList";
+import ProductDetail from "./ProductDetail";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -9,6 +10,7 @@ import Footer from "./Footer";
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [page, setPage] = useState("products");
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <>
@@ -20,7 +22,17 @@ export default function App() {
       />
 
       {/* PAGES */}
-      {page === "products" && <ProductList />}
+      {page === "products" && (
+        <ProductList onSelectProduct={(p) => { setSelectedProduct(p); setPage("detail"); }} />
+      )}
+
+      {page === "detail" && selectedProduct && (
+        <ProductDetail
+          product={selectedProduct}
+          onBack={() => setPage("products")}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
 
       {page === "signup" && (
         <Signup onSignup={() => setPage("login")} />
