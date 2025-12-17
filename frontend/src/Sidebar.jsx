@@ -28,41 +28,42 @@ export default function Sidebar({
     setPriceRange({ min: "", max: "" });
   }
 
-  // intentionally no global clear function for manual amount
-
   return (
-    <div style={styles.sidebar}>
-      {/* CATEGORY */}
-      <h3 style={styles.title}>Shop by Category</h3>
-
-      {categories.map((cat) => (
-        <div
-          key={cat}
-          onClick={() => setSelectedCategory(cat)}
-          style={{
-            ...styles.item,
-            backgroundColor:
-              selectedCategory === cat ? "#e8f5e9" : "transparent",
-            color:
-              selectedCategory === cat ? "#1b5e20" : "#333",
-            fontWeight:
-              selectedCategory === cat ? "600" : "400",
-          }}
-        >
-          {cat}
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <div style={styles.cardHeader}>
+          <h4 style={styles.cardTitle}>Category</h4>
         </div>
-      ))}
 
-      <hr style={styles.divider} />
-
-      {/* PRICE FILTER */}
-      <div style={styles.priceHeader}>
-        <h3 style={styles.title}>Price</h3>
-        <small style={styles.smallText}>Select range</small>
+        <div style={styles.catList}>
+          {categories.map((cat) => {
+            const active = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  ...styles.catItem,
+                  background: active ? "#eaf6ee" : "transparent",
+                  borderLeft: active ? "4px solid #2e7d32" : "4px solid transparent",
+                  color: active ? "#1b5e20" : "#333",
+                }}
+                aria-pressed={active}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <div style={styles.presetsWrap}>
-        <div style={styles.presets}>
+      <div style={styles.card}>
+        <div style={styles.cardHeader}>
+          <h4 style={styles.cardTitle}>Price</h4>
+          <small style={styles.cardSub}>Choose a range</small>
+        </div>
+
+        <div style={styles.presetGrid}>
           {presets.map((p) => {
             const active = selectedPriceRanges.some((r) => r.id === p.id);
             return (
@@ -71,52 +72,49 @@ export default function Sidebar({
                 onClick={() => togglePreset(p)}
                 aria-pressed={active}
                 style={{
-                  ...styles.presetBtn,
-                  background: active ? "linear-gradient(135deg,#2e7d32,#66bb6a)" : "#fff",
-                  color: active ? "#fff" : "#333",
-                  boxShadow: active ? "0 6px 18px rgba(46,125,50,0.18)" : "0 6px 18px rgba(15,15,15,0.03)",
+                  ...styles.preset,
+                  background: active ? "#eaf6ee" : "#fff",
+                  color: active ? "#1b5e20" : "#2e2e2e",
+                  boxShadow: active ? "0 6px 18px rgba(46,125,50,0.06)" : "0 6px 18px rgba(15,15,15,0.03)",
+                  borderLeft: active ? "4px solid #2e7d32" : "4px solid transparent",
+                  paddingLeft: 12,
                 }}
               >
-                <span style={styles.presetLabel}>{p.label}</span>
-                {active && <span style={styles.check}>✓</span>}
+                {p.label}
               </button>
             );
           })}
         </div>
 
-        {/* no history/selected list shown here by design */}
-      </div>
+        <div style={styles.manual}> 
+          <div style={styles.manualRow}>
+            <div style={styles.inputWrap}>
+              <label style={styles.label}>Min</label>
+              <input
+                type="number"
+                placeholder="0"
+                value={priceRange.min}
+                onChange={(e) => {
+                  setSelectedPriceRanges([]);
+                  setPriceRange({ ...priceRange, min: e.target.value });
+                }}
+                style={styles.input}
+              />
+            </div>
 
-      <div style={styles.manualBox}>
-        <small style={styles.smallText}>Or enter custom range</small>
-
-        <div style={styles.priceBoxManual}>
-          <div style={styles.inputWrap}>
-            <label style={styles.inputLabel}>Min</label>
-            <input
-              type="number"
-              placeholder="0"
-              value={priceRange.min}
-              onChange={(e) => {
-                setSelectedPriceRanges([]);
-                setPriceRange({ ...priceRange, min: e.target.value });
-              }}
-              style={styles.priceInput}
-            />
-          </div>
-
-          <div style={styles.inputWrap}>
-            <label style={styles.inputLabel}>Max</label>
-            <input
-              type="number"
-              placeholder="No limit"
-              value={priceRange.max}
-              onChange={(e) => {
-                setSelectedPriceRanges([]);
-                setPriceRange({ ...priceRange, max: e.target.value });
-              }}
-              style={styles.priceInput}
-            />
+            <div style={styles.inputWrap}>
+              <label style={styles.label}>Max</label>
+              <input
+                type="number"
+                placeholder="No limit"
+                value={priceRange.max}
+                onChange={(e) => {
+                  setSelectedPriceRanges([]);
+                  setPriceRange({ ...priceRange, max: e.target.value });
+                }}
+                style={styles.input}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -127,135 +125,86 @@ export default function Sidebar({
 /* ================= STYLES ================= */
 
 const styles = {
-  sidebar: {
-    width: 240,
-    background: "#fff",
-    padding: 20,
-    borderRadius: 14,
-    boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
-    height: "fit-content"
-  },
-  title: {
-    marginBottom: 12,
-    fontSize: 16,
-    color: "#1b5e20",
-    fontWeight: 700
-  },
-  item: {
-    padding: "10px 14px",
-    borderRadius: 10,
-    cursor: "pointer",
-    marginBottom: 6,
-    transition: "all 0.2s ease"
-  },
-  divider: {
-    margin: "18px 0",
-    border: "none",
-    borderTop: "1px solid #eee"
-  },
-  priceBox: {
-    display: "flex",
-    gap: 10
-  },
-  priceInput: {
-    width: "100%",
-    padding: "8px 10px",
-    borderRadius: 8,
-    border: "1px solid #ccc",
-    outline: "none"
-  }
-};
-
-// extra styles appended to existing styles object
-Object.assign(styles, {
-  presetsWrap: {
+  container: {
+    width: 260,
     display: "flex",
     flexDirection: "column",
-    gap: 10,
+    gap: 16,
   },
-  presets: {
-    display: "grid",
-    gridTemplateColumns: "1fr",
+  card: {
+    background: "#fff",
+    borderRadius: 12,
+    padding: 14,
+    boxShadow: "0 8px 24px rgba(7,16,12,0.04)",
+  },
+  cardHeader: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  cardTitle: {
+    margin: 0,
+    fontSize: 15,
+    color: "#18342a",
+  },
+  cardSub: {
+    fontSize: 12,
+    color: "#6b6b6b",
+  },
+  catList: {
+    display: "flex",
+    flexDirection: "column",
     gap: 8,
   },
-  presetBtn: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "10px 12px",
-    borderRadius: 10,
-    border: "1px solid #eef3ee",
+  catItem: {
+    textAlign: "left",
+    padding: "8px 10px",
+    borderRadius: 8,
+    border: "none",
+    background: "transparent",
     cursor: "pointer",
     transition: "all 160ms ease",
     fontSize: 14,
   },
-  presetLabel: {
-    display: "inline-block",
-    textAlign: "left",
-  },
-  check: {
-    marginLeft: 8,
-    fontWeight: 700,
-    opacity: 0.95,
-  },
-  activeRow: {
-    display: "flex",
-    gap: 8,
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-  chip: {
-    background: "#f1f8f2",
-    color: "#1b5e20",
-    padding: "6px 10px",
-    borderRadius: 999,
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    fontSize: 13,
-  },
-  chipClose: {
-    border: "none",
-    background: "transparent",
-    cursor: "pointer",
-    fontSize: 14,
-    lineHeight: 1,
-    color: "#1b5e20",
-  },
-  clearBtn: {
-    marginLeft: 6,
-    background: "transparent",
-    border: "1px solid #e0e0e0",
-    color: "#333",
-    padding: "6px 10px",
-    borderRadius: 8,
-    cursor: "pointer",
-    fontSize: 13,
-  },
-  manualBox: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-    marginTop: 8,
-  },
-  priceBoxManual: {
-    display: "flex",
+  presetGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr",
     gap: 8,
     marginTop: 6,
+  },
+  preset: {
+    padding: "10px 12px",
+    borderRadius: 10,
+    border: "1px solid #e9f3ea",
+    cursor: "pointer",
+    textAlign: "left",
+    fontSize: 14,
+  },
+  manual: {
+    marginTop: 12,
+  },
+  manualRow: {
+    display: "flex",
+    gap: 8,
   },
   inputWrap: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
+    width: "40%",
   },
-  inputLabel: {
+  label: {
     fontSize: 12,
-    color: "#777",
+    color: "#6b6b6b",
     marginBottom: 6,
   },
-  smallText: {
-    fontSize: 12,
-    color: "#777",
+  input: {
+    padding: "10px 12px",
+    borderRadius: 10,
+    border: "1px solid #e6e6e6",
+    outline: "none",
+    fontSize: 14,
   },
-});
+};
 
