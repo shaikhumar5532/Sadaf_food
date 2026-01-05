@@ -126,27 +126,37 @@ export default function Sidebar({
 
 const styles = {
   container: {
-    width: 260,
+    width: 300,
     display: "flex",
     flexDirection: "column",
-    gap: 16,
+    gap: 20,
+    padding: 12,
+    boxSizing: "border-box",
+    position: "sticky",
+    top: 96,
+    /* allow the sidebar to grow with the page; remove internal scrolling */
+    alignSelf: "flex-start",
   },
   card: {
-    background: "#fff",
-    borderRadius: 12,
-    padding: 14,
-    boxShadow: "0 8px 24px rgba(7,16,12,0.04)",
+    background: "#ffffff",
+    borderRadius: 14,
+    padding: 18,
+    boxShadow: "0 10px 30px rgba(16,24,40,0.06)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 12,
   },
   cardHeader: {
     display: "flex",
-    alignItems: "baseline",
+    alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 6,
   },
   cardTitle: {
     margin: 0,
-    fontSize: 15,
+    fontSize: 16,
     color: "#18342a",
+    fontWeight: 700,
   },
   cardSub: {
     fontSize: 12,
@@ -155,7 +165,7 @@ const styles = {
   catList: {
     display: "flex",
     flexDirection: "column",
-    gap: 8,
+    gap: 10,
   },
   catItem: {
     textAlign: "left",
@@ -170,29 +180,31 @@ const styles = {
   presetGrid: {
     display: "grid",
     gridTemplateColumns: "1fr",
-    gap: 8,
-    marginTop: 6,
+    gap: 10,
+    marginTop: 8,
   },
   preset: {
-    padding: "10px 12px",
-    borderRadius: 10,
-    border: "1px solid #e9f3ea",
+    padding: "12px 14px",
+    borderRadius: 12,
+    border: "1px solid #eef6ef",
     cursor: "pointer",
     textAlign: "left",
     fontSize: 14,
+    background: "#fbfdff",
   },
   manual: {
-    marginTop: 12,
+    marginTop: 6,
   },
   manualRow: {
     display: "flex",
     gap: 8,
+    flexWrap: "wrap",
   },
   inputWrap: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    width: "40%",
+    width: "100%",
   },
   label: {
     fontSize: 12,
@@ -205,6 +217,8 @@ const styles = {
     border: "1px solid #e6e6e6",
     outline: "none",
     fontSize: 14,
+    width: "100%",
+    boxSizing: "border-box",
   },
 };
 

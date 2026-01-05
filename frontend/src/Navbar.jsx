@@ -1,13 +1,6 @@
 import { useState } from "react";
 import logo from "./assets/logo.png";
 
-const categories = [
-  "All",
-  "Makhana",
-  "Lichi",
-  "Fish",
-  "Vegetable"
-];
 
 export default function Navbar({
   isLoggedIn,
@@ -15,20 +8,14 @@ export default function Navbar({
   setPage,
   setSelectedCategory
 }) {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const handleCategoryClick = (cat) => {
-    setActiveCategory(cat);
-    setSelectedCategory(cat);
-    setPage("products");
-  };
+  
 
   return (
     <>
       {/* 🔷 TOP NAVBAR */}
       <div style={styles.navbar}>
-        {/* LEFT: Logo */}
-        <div style={styles.left} onClick={() => setPage("products")}>
+        {/* LEFT: Logo (go to landing) */}
+        <div style={styles.left} onClick={() => { setSelectedCategory("All"); setPage("landing"); }}>
           <img src={logo} alt="SFPPL Logo" style={styles.logoImage} />
           <span style={styles.logoText}>
             SADAF<span style={{ color: "#00e676" }}>food</span>
@@ -76,24 +63,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* 🔷 CATEGORY BAR */}
-      <div style={styles.categoryBar}>
-        {categories.map((cat) => {
-          const isActive = activeCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => handleCategoryClick(cat)}
-              style={{
-                ...styles.categoryBtn,
-                ...(isActive ? styles.activeCategory : {})
-              }}
-            >
-              {cat}
-            </button>
-          );
-        })}
-      </div>
+      
     </>
   );
 }
@@ -186,33 +156,7 @@ const styles = {
     fontWeight: 600
   },
 
-  /* CATEGORY BAR */
-  categoryBar: {
-    display: "flex",
-    gap: 14,
-    padding: "14px 40px",
-    background: "#ffffff",
-    borderBottom: "1px solid #e0e0e0",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.04)",
-    overflowX: "auto"
-  },
-
-  categoryBtn: {
-    padding: "10px 20px",
-    borderRadius: 30,
-    border: "1px solid #dcdcdc",
-    background: "#f9f9f9",
-    cursor: "pointer",
-    fontWeight: 500,
-    transition: "all 0.25s ease",
-    whiteSpace: "nowrap"
-  },
-
-  activeCategory: {
-    background: "linear-gradient(135deg, #2e7d32, #66bb6a)",
-    color: "#fff",
-    border: "none",
-    boxShadow: "0 6px 16px rgba(46,125,50,0.35)",
-    transform: "scale(1.05)"
-  }
+  /* category styles removed (not used) */
+  
+  
 };

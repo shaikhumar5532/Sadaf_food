@@ -6,26 +6,44 @@ import ProductDetail from "./ProductDetail";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
+import LandingPage from "./LandingPage";
+
+
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [page, setPage] = useState("products");
+  const [page, setPage] = useState("landing");
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+  const normSelected = String(selectedCategory ?? "").trim().toLowerCase();
+  const isAllSelected = normSelected === "all";
 
   return (
     <>
       {/* ================= NAVBAR ================= */}
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-        setPage={setPage}
-        setSelectedCategory={setSelectedCategory}
-      />
+      {/* Show Navbar ONLY after landing */}
+      {page !== "landing" && (
+        <Navbar
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setPage={setPage}
+          setSelectedCategory={setSelectedCategory}
+        />
+      )}
 
       {/* ================= PAGES ================= */}
+
+      {/* LANDING */}
+      {page === "landing" && (
+        <LandingPage
+          goToProducts={() => setPage("products")}
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setPage={setPage}
+        />
+      )}
 
       {/* PRODUCT LIST (PLP) */}
       {page === "products" && (
@@ -81,7 +99,7 @@ export default function App() {
       )}
 
       {/* ================= FOOTER ================= */}
-      <Footer />
+      <Footer page={page} />
     </>
   );
 }

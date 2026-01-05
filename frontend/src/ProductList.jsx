@@ -43,11 +43,11 @@ export default function ProductList({
 
   return (
     <div style={styles.container}>
-      {/* <h2 style={styles.heading}>
+      <h2 style={styles.heading}>
         {selectedCategory === "All"
           ? "All Products"
           : `${selectedCategory} Products`}
-      </h2> */}
+      </h2>
 
       <div style={styles.grid}>
         {filteredProducts.map((product) => (
@@ -118,15 +118,15 @@ export default function ProductList({
 
 const styles = {
   container: {
-    padding: "20px 60px",
-    background: "#f9fafb",
+    padding: "28px 48px",
+    background: "#f6f8fb",
     minHeight: "100vh",
   },
   heading: {
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 28,
     fontSize: 28,
-    color: "#1b5e20",
+    color: "#0f172a",
     fontWeight: 700,
   },
   grid: {
@@ -136,12 +136,11 @@ const styles = {
     gap: 28,
   },
   card: {
-    background: "#fff",
-    borderRadius: 16,
+    background: "#ffffff",
+    borderRadius: 12,
     overflow: "hidden",
-    boxShadow:
-      "0 10px 25px rgba(0,0,0,0.08)",
-    transition: "all 0.3s ease",
+    boxShadow: "0 8px 20px rgba(16,24,40,0.06)",
+    transition: "all 0.28s ease",
   },
   imageWrapper: {
     height: 190,
@@ -174,7 +173,7 @@ const styles = {
   price: {
     fontSize: 18,
     fontWeight: 700,
-    color: "#1b5e20",
+    color: "#166534",
     margin: "6px 0",
   },
   desc: {
