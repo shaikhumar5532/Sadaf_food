@@ -1,15 +1,24 @@
-export default function Footer({ page }) {
-  const footerBackground = page === "landing"
-    ? "linear-gradient(135deg, #0f172a, #1e293b, #0c3b2e)"
-    : "#0b0b0c";
+export default function Footer({ page, setPage }) {
+  const footerBackground =
+    page === "landing"
+      ? "linear-gradient(135deg, #0f172a, #1e293b, #0c3b2e)"
+      : "#0b0b0c";
 
   return (
     <footer style={{ ...styles.footer, background: footerBackground }}>
       <div style={styles.inner}>
         <div style={styles.col}>
-          <h3 style={styles.brand}>SFPPL</h3>
+          <h3
+            style={{ ...styles.brand, cursor: "pointer", color: "#4ade80" }}
+            onClick={() => setPage("company")}
+          >
+            SFPPL
+          </h3>
+
           <p style={styles.muted}>Sadaf Food Processor Pvt. Ltd.</p>
-          <p style={styles.mutedSmall}>Delivering quality Makhana, Lichi, Fish & Vegetables.</p>
+          <p style={styles.mutedSmall}>
+            Delivering quality Makhana, Lichi, Fish & Vegetables.
+          </p>
         </div>
 
         <div style={styles.col}>
@@ -34,20 +43,41 @@ export default function Footer({ page }) {
 
         <div style={styles.colRight}>
           <h4 style={styles.colTitle}>Get Our App</h4>
+
           <div style={styles.badges}>
             <a href="#" style={styles.badgeLink}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style={styles.badge} />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                alt="Google Play"
+                style={styles.badge}
+              />
             </a>
+
             <a href="#" style={styles.badgeLink}>
-              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" style={styles.badge} />
+              <img
+                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                alt="App Store"
+                style={styles.badge}
+              />
             </a>
           </div>
 
           <div style={styles.socialRow}>
-            <a href="#" style={styles.social}>🇫</a>
-            <a href="#" style={styles.social}>🇮</a>
-            <a href="#" style={styles.social}>🐦</a>
-            <a href="#" style={styles.social}>📌</a>
+            <a href="https://www.facebook.com/shaikh.umar.127201" style={styles.social}>
+              <i className="fab fa-facebook"></i>
+            </a>
+
+            <a href="https://www.instagram.com/s_umar__01/" style={styles.social}>
+              <i className="fab fa-instagram"></i>
+            </a>
+
+            <a href="https://x.com/ShaikhU71405462" style={styles.social}>
+              <i className="fab fa-twitter-square"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/in/shaikh-umar-22834b298/" style={styles.social}>
+              <i className="fab fa-linkedin"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -61,11 +91,7 @@ export default function Footer({ page }) {
 }
 
 const styles = {
-  footer: {
-    background: "#0b0b0c",
-    color: "#fff",
-    marginTop: 0,
-  },
+  footer: { background: "#0b0b0c", color: "#fff", marginTop: 0 },
   inner: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 300px",
@@ -73,23 +99,15 @@ const styles = {
     padding: "40px 60px",
     alignItems: "start",
   },
-  col: {
-    minWidth: 0,
-  },
-  colRight: {
-    minWidth: 0,
-    textAlign: "left",
-  },
+  col: { minWidth: 0 },
+  colRight: { minWidth: 0, textAlign: "left" },
   brand: {
     fontSize: 28,
     fontWeight: 800,
     color: "#fff",
     marginBottom: 8,
   },
-  muted: {
-    color: "#cfcfcf",
-    margin: "6px 0",
-  },
+  muted: { color: "#cfcfcf", margin: "6px 0" },
   mutedSmall: { color: "#bdbdbd", fontSize: 13, marginTop: 6 },
   colTitle: {
     color: "#e6ffed",

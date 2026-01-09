@@ -140,7 +140,8 @@ const styles = {
   card: {
     background: "#ffffff",
     borderRadius: 14,
-    padding: 18,
+    padding: 10,
+    margin: 20,
     boxShadow: "0 10px 30px rgba(16,24,40,0.06)",
     display: "flex",
     flexDirection: "column",

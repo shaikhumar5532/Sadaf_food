@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import LandingPage from "./LandingPage";
+import CompanyDetails from "./CompanyDetails";
 
 
 export default function App() {
@@ -99,7 +100,11 @@ export default function App() {
       )}
 
       {/* ================= FOOTER ================= */}
-      <Footer page={page} />
+       {/* COMPANY DETAILS PAGE */}
+      {page === "company" && <CompanyDetails />}
+
+      {/* FOOTER */}
+      <Footer page={page} setPage={setPage} />
     </>
   );
 }

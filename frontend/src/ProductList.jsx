@@ -118,7 +118,7 @@ export default function ProductList({
 
 const styles = {
   container: {
-    padding: "28px 48px",
+    padding: "2px 15px",
     background: "#f6f8fb",
     minHeight: "100vh",
   },
