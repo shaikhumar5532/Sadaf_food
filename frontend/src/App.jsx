@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import Login from "./Login";
 import Signup from "./Signup";
 import ProductList from "./ProductList";
@@ -8,23 +9,25 @@ import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import LandingPage from "./LandingPage";
 import CompanyDetails from "./CompanyDetails";
-
+import Careers from "./Careers";
+import ApplyJob from "./ApplyJob";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [page, setPage] = useState("landing");
 
+  // PRODUCT STATES
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-  const normSelected = String(selectedCategory ?? "").trim().toLowerCase();
-  const isAllSelected = normSelected === "all";
+
+  // CAREER STATES
+  const [selectedJob, setSelectedJob] = useState(null);
 
   return (
     <>
       {/* ================= NAVBAR ================= */}
-      {/* Show Navbar ONLY after landing */}
       {page !== "landing" && (
         <Navbar
           isLoggedIn={isLoggedIn}
@@ -34,9 +37,7 @@ export default function App() {
         />
       )}
 
-      {/* ================= PAGES ================= */}
-
-      {/* LANDING */}
+      {/* ================= LANDING ================= */}
       {page === "landing" && (
         <LandingPage
           goToProducts={() => setPage("products")}
@@ -46,7 +47,7 @@ export default function App() {
         />
       )}
 
-      {/* PRODUCT LIST (PLP) */}
+      {/* ================= PRODUCT LIST ================= */}
       {page === "products" && (
         <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
           <Sidebar
@@ -72,24 +73,24 @@ export default function App() {
         </div>
       )}
 
-      {/* PRODUCT DETAIL (PDP) */}
+      {/* ================= PRODUCT DETAIL ================= */}
       {page === "detail" && selectedProduct && (
         <ProductDetail
           product={selectedProduct}
           isLoggedIn={isLoggedIn}
           onBack={() => {
-            setPage("products");
             setSelectedProduct(null);
+            setPage("products");
           }}
         />
       )}
 
-      {/* SIGNUP */}
+      {/* ================= SIGNUP ================= */}
       {page === "signup" && (
         <Signup onSignup={() => setPage("login")} />
       )}
 
-      {/* LOGIN */}
+      {/* ================= LOGIN ================= */}
       {page === "login" && !isLoggedIn && (
         <Login
           onLogin={() => {
@@ -99,11 +100,31 @@ export default function App() {
         />
       )}
 
-      {/* ================= FOOTER ================= */}
-       {/* COMPANY DETAILS PAGE */}
+      {/* ================= COMPANY DETAILS ================= */}
       {page === "company" && <CompanyDetails />}
 
-      {/* FOOTER */}
+      {/* ================= CAREERS ================= */}
+      {page === "careers" && (
+        <Careers
+          onApply={(job) => {
+            setSelectedJob(job);
+            setPage("apply-job");
+          }}
+        />
+      )}
+
+      {/* ================= APPLY JOB PAGE ================= */}
+      {page === "apply-job" && selectedJob && (
+        <ApplyJob
+          job={selectedJob}
+          onBack={() => {
+            setSelectedJob(null);
+            setPage("careers");
+          }}
+        />
+      )}
+
+      {/* ================= FOOTER ================= */}
       <Footer page={page} setPage={setPage} />
     </>
   );
