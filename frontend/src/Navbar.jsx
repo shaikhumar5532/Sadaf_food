@@ -1,135 +1,126 @@
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "./assets/logo.png";
 
 export default function Navbar({
   isLoggedIn,
   setIsLoggedIn,
-  setPage,
   setSelectedCategory
 }) {
-  const [active, setActive] = useState("landing");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  if (location.pathname === "/") return null;
 
   const menuItems = [
-    // { key: "landing", label: "Home" },
-    { key: "company", label: "About" },      // 👈 CompanyDetails Page
-    { key: "products", label: "Products" },
-    { key: "careers", label: "Careers" },
-    { key: "contact", label: "Contact" }
+    { path: "/products", label: "Products" },
+    { path: "/careers", label: "Careers" },
+    { path: "/contact", label: "Contact" },
+    { path: "/company", label: "About" }
   ];
 
   return (
-    <>
-      <div style={styles.navbar}>
-        {/* LEFT — LOGO + MENU GROUP */}
-        <div style={styles.leftGroup}>
-          {/* LOGO */}
-          <div
-            style={styles.left}
-            onClick={() => {
-              setSelectedCategory("All");
-              setPage("landing");
-              setActive("landing");
-            }}
-          >
-            <img src={logo} alt="SFPPL Logo" style={styles.logoImage} />
+    <div style={styles.navbar}>
+      <div style={styles.leftGroup}>
+        <div
+          style={styles.logoContainer}
+          onClick={() => {
+            setSelectedCategory("All");
+            navigate("/");
+          }}
+        >
+          <img src={logo} alt="Logo" style={styles.logoImage} />
+          <span style={styles.logoText}>
+            SADAF<span style={{ color: "#ff4d4d" }}>food</span>
+          </span>
+        </div>
 
-            <span style={styles.logoText}>
-              SADAF<span style={{ color: "#000" }}>food</span>
-            </span>
-          </div>
+        <div style={styles.menu}>
+          {menuItems.map((item) => {
+            const isActive = location.pathname === item.path;
 
-          {/* MENU */}
-          <div style={styles.menu}>
-            {menuItems.map(item => (
-              <span
-                key={item.key}
-                style={{
-                  ...styles.menuItem,
-                  color: active === item.key ? "#000" : "#222",
-                }}
-                onClick={() => {
-                  setPage(item.key);
-                  setActive(item.key);
-                }}
-                onMouseEnter={(e) =>
-                  (e.target.querySelector("div").style.width = "100%")
-                }
-                onMouseLeave={(e) =>
-                  (e.target.querySelector("div").style.width =
-                    active === item.key ? "100%" : "0%")
-                }
+            return (
+              <div
+                key={item.path}
+                style={styles.menuItem}
+                onClick={() => navigate(item.path)}
               >
-                {item.label}
+                <span
+                  style={{
+                    ...styles.menuText,
+                    color: isActive ? "#ff4d4d" : "#333"
+                  }}
+                >
+                  {item.label}
+                </span>
 
                 <div
                   style={{
                     ...styles.underline,
-                    width: active === item.key ? "100%" : "0%",
+                    transform: isActive
+                      ? "scaleX(1)"
+                      : "scaleX(0)"
                   }}
-                ></div>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* RIGHT — AUTH */}
-        <div style={styles.right}>
-          {!isLoggedIn ? (
-            <>
-              <button style={styles.loginBtn} onClick={() => setPage("login")}>
-                Login
-              </button>
-
-              <button style={styles.signupBtn} onClick={() => setPage("signup")}>
-                Signup
-              </button>
-            </>
-          ) : (
-            <button
-              style={styles.logoutBtn}
-              onClick={() => {
-                setIsLoggedIn(false);
-                setPage("login");
-              }}
-            >
-              Logout
-            </button>
-          )}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-    </>
+
+      <div style={styles.right}>
+        {!isLoggedIn ? (
+          <>
+            <button
+              style={styles.loginBtn}
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+
+            <button
+              style={styles.signupBtn}
+              onClick={() => navigate("/signup")}
+            >
+              Get Started
+            </button>
+          </>
+        ) : (
+          <button
+            style={styles.logoutBtn}
+            onClick={() => {
+              setIsLoggedIn(false);
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 
-/* ===================== STYLES ===================== */
-
 const styles = {
   navbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-    padding: "18px 34px",
     position: "sticky",
     top: 0,
     zIndex: 1000,
-
-    background: "rgba(255, 255, 255, 0.55)",
-    backdropFilter: "blur(16px)",
-    WebkitBackdropFilter: "blur(16px)",
-    borderBottom: "1px solid rgba(0,0,0,0.08)",
-    boxShadow: "0 12px 30px rgba(0,0,0,.12)",
-
-    color: "#000"
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "18px 40px",
+    backdropFilter: "blur(10px)",
+    background: "rgba(255,255,255,0.85)",
+    borderBottom: "1px solid rgba(0,0,0,0.05)"
   },
 
   leftGroup: {
     display: "flex",
-    alignItems: "center",
-    gap: 28
+    gap: 40,
+    alignItems: "center"
   },
 
-  left: {
+  logoContainer: {
     display: "flex",
     alignItems: "center",
     gap: 10,
@@ -137,77 +128,77 @@ const styles = {
   },
 
   logoImage: {
-    height: 44,
-    width: 44,
-    backgroundColor: "#fff",
-    padding: 4,
-    borderRadius: 12,
-    boxShadow: "0 6px 16px rgba(0,0,0,.2)"
+    height: 42,
+    width: 42,
+    borderRadius: "50%"
   },
 
   logoText: {
-    fontSize: 26,
-    fontWeight: 900,
-    letterSpacing: 0.6
+    fontSize: 22,
+    fontWeight: 800,
+    letterSpacing: 1
   },
 
   menu: {
     display: "flex",
-    gap: 36
+    gap: 30
   },
 
   menuItem: {
-    position: "relative",
     cursor: "pointer",
+    position: "relative"
+  },
 
-    fontSize: 20,
+  menuText: {
+    fontSize: 15,
     fontWeight: 500,
-
-    opacity: 0.95,
-    transition: "0.25s"
+    transition: "0.3s ease"
   },
 
   underline: {
     height: 2,
-    background: "#000",
+    background: "#ff4d4d",
     position: "absolute",
-    bottom: -4,
+    bottom: -6,
     left: 0,
-    transition: "0.25s"
+    width: "100%",
+    transformOrigin: "left",
+    transition: "transform 0.3s ease"
   },
 
   right: {
     display: "flex",
-    gap: 10
+    gap: 14
   },
 
   loginBtn: {
-    padding: "9px 18px",
-    borderRadius: 24,
-    border: "1px solid #000",
-    backgroundColor: "#000",
-    color: "#fff",
+    padding: "8px 18px",
+    borderRadius: 30,
+    border: "1px solid #ff4d4d",
+    background: "transparent",
+    color: "#ff4d4d",
     cursor: "pointer",
-    fontWeight: 600
+    transition: "0.3s"
   },
 
   signupBtn: {
-    padding: "9px 18px",
-    borderRadius: 24,
-    border: "1px solid #000",
-    backgroundColor: "#000",
+    padding: "8px 20px",
+    borderRadius: 30,
+    border: "none",
+    background: "linear-gradient(135deg, #ff4d4d, #ff1a1a)",
     color: "#fff",
+    fontWeight: 600,
     cursor: "pointer",
-    fontWeight: 700
+    boxShadow: "0 4px 14px rgba(255,77,77,0.4)",
+    transition: "0.3s"
   },
 
   logoutBtn: {
-    padding: "9px 18px",
-    borderRadius: 24,
-    border: "1px solid #000",
-    backgroundColor: "#000",
+    padding: "8px 20px",
+    borderRadius: 30,
+    border: "none",
+    background: "#111",
     color: "#fff",
-    cursor: "pointer",
-    fontWeight: 700
+    cursor: "pointer"
   }
 };

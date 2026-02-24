@@ -15,7 +15,7 @@ export default function ProductDetail({ product, onBack, isLoggedIn }) {
       );
       alert("✅ Product updated successfully");
       setEditMode(false);
-    } catch (err) {
+    } catch {
       alert("❌ Failed to update product");
     } finally {
       setLoading(false);
@@ -29,17 +29,24 @@ export default function ProductDetail({ product, onBack, isLoggedIn }) {
       await axios.delete(`http://localhost:5000/api/products/${product._id}`);
       alert("🗑 Product deleted");
       onBack();
-    } catch (err) {
+    } catch {
       alert("❌ Failed to delete product");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleAddToCart = () => {
+    alert("🛒 Added to cart!");
+  };
+
+  const handleBuyNow = () => {
+    alert("⚡ Proceeding to checkout...");
+  };
+
   return (
     <div style={styles.page}>
-      <button onClick={onBack} style={styles.backBtn}>← Back to Products</button>
-
+      {/* ================= PRODUCT CARD ================= */}
       <div style={styles.card}>
         {/* IMAGE SECTION */}
         <div style={styles.imageBox}>
@@ -96,10 +103,17 @@ export default function ProductDetail({ product, onBack, isLoggedIn }) {
               />
 
               <div style={styles.actionRow}>
-                <button style={styles.primaryBtn} onClick={updateProduct} disabled={loading}>
+                <button
+                  style={styles.primaryBtn}
+                  onClick={updateProduct}
+                  disabled={loading}
+                >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
-                <button style={styles.secondaryBtn} onClick={() => setEditMode(false)}>
+                <button
+                  style={styles.secondaryBtn}
+                  onClick={() => setEditMode(false)}
+                >
                   Cancel
                 </button>
               </div>
@@ -111,9 +125,21 @@ export default function ProductDetail({ product, onBack, isLoggedIn }) {
               <p style={styles.price}>₹ {form.price}</p>
               <p style={styles.description}>{form.description}</p>
 
+              <div style={styles.buySection}>
+                <button style={styles.cartBtn} onClick={handleAddToCart}>
+                  🛒 Add to Cart
+                </button>
+                <button style={styles.buyBtn} onClick={handleBuyNow}>
+                  ⚡ Buy Now
+                </button>
+              </div>
+
               {isLoggedIn && (
                 <div style={styles.actionRow}>
-                  <button style={styles.primaryBtn} onClick={() => setEditMode(true)}>
+                  <button
+                    style={styles.primaryBtn}
+                    onClick={() => setEditMode(true)}
+                  >
                     ✏ Edit
                   </button>
                   <button
@@ -129,6 +155,37 @@ export default function ProductDetail({ product, onBack, isLoggedIn }) {
           )}
         </div>
       </div>
+
+      {/* ================= WHY CHOOSE SECTION ================= */}
+      <div style={styles.featureSection}>
+        <h2 style={styles.featureTitle}>Why Choose Our Product?</h2>
+
+        <div style={styles.featureGrid}>
+          <div style={styles.featureCard}>
+            <div style={styles.icon}></div>
+            <h4>Premium Quality</h4>
+            <p>Carefully selected and quality tested items.</p>
+          </div>
+
+          <div style={styles.featureCard}>
+            <div style={styles.icon}></div>
+            <h4>Fast Delivery</h4>
+            <p>Quick and reliable shipping.</p>
+          </div>
+
+          <div style={styles.featureCard}>
+            <div style={styles.icon}></div>
+            <h4>Secure Payment</h4>
+            <p>100% safe and secure checkout.</p>
+          </div>
+
+          <div style={styles.featureCard}>
+            <div style={styles.icon}></div>
+            <h4>Easy Returns</h4>
+            <p>Hassle-free return policy.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -141,14 +198,7 @@ const styles = {
     backgroundColor: "#f7f9fc",
     minHeight: "100vh"
   },
-  backBtn: {
-    marginBottom: 20,
-    background: "none",
-    border: "none",
-    color: "#2c7a2c",
-    fontSize: 16,
-    cursor: "pointer"
-  },
+
   card: {
     display: "flex",
     gap: 40,
@@ -159,80 +209,91 @@ const styles = {
     maxWidth: 1100,
     margin: "auto"
   },
-  imageBox: {
-    flex: 1
-  },
+
+  imageBox: { flex: 1 },
+
   image: {
     width: "100%",
     height: 400,
     objectFit: "cover",
     borderRadius: 10
   },
-  details: {
-    flex: 1.2
-  },
-  title: {
-    fontSize: 32,
-    marginBottom: 5
-  },
+
+  details: { flex: 1.2 },
+
+  title: { fontSize: 32, marginBottom: 5 },
+
   category: {
-    color: "#2c7a2c",
+    color: "#000",
     fontWeight: 600,
     marginBottom: 10
   },
+
   price: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 700,
     marginBottom: 15
   },
+
   description: {
     lineHeight: 1.6,
-    color: "#444"
+    color: "#444",
+    marginBottom: 20
   },
-  label: {
-    fontWeight: 600,
-    marginTop: 10
-  },
-  input: {
-    width: "100%",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 6,
-    border: "1px solid #ccc"
-  },
-  textarea: {
-    width: "100%",
-    minHeight: 120,
-    padding: 10,
-    borderRadius: 6,
-    border: "1px solid #ccc"
-  },
-  actionRow: {
+
+  buySection: {
     display: "flex",
-    gap: 12,
-    marginTop: 20
+    gap: 15,
+    marginBottom: 25
   },
-  primaryBtn: {
-    backgroundColor: "#2c7a2c",
+
+  cartBtn: {
+    backgroundColor: "#000",
     color: "#fff",
-    padding: "10px 20px",
+    padding: "12px 22px",
     border: "none",
-    borderRadius: 6,
+    borderRadius: 8,
     cursor: "pointer"
   },
-  secondaryBtn: {
-    backgroundColor: "#eee",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: 6,
-    cursor: "pointer"
-  },
-  dangerBtn: {
-    backgroundColor: "#e53935",
+
+  buyBtn: {
+    backgroundColor: "#333",
     color: "#fff",
-    padding: "10px 20px",
+    padding: "12px 22px",
     border: "none",
-    borderRadius: 6,
+    borderRadius: 8,
     cursor: "pointer"
+  },
+
+  featureSection: {
+    marginTop: 60,
+    maxWidth: 1100,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+
+  featureTitle: {
+    fontSize: 24,
+    marginBottom: 30,
+    fontWeight: 600
+  },
+
+  featureGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: 20
+  },
+
+  featureCard: {
+    background: "#fff",
+    padding: 25,
+    borderRadius: 12,
+    textAlign: "center",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.05)"
+  },
+
+  icon: {
+    fontSize: 28,
+    marginBottom: 10
   }
 };

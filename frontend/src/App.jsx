@@ -1,20 +1,24 @@
 import { useState } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
-import Login from "./Login";
-import Signup from "./Signup";
-import ProductList from "./ProductList";
-import ProductDetail from "./ProductDetail";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ProductList from "./ProductList";
+import ProductDetail from "./ProductDetail";
 import Sidebar from "./Sidebar";
 import LandingPage from "./LandingPage";
 import CompanyDetails from "./CompanyDetails";
 import Careers from "./Careers";
 import ApplyJob from "./ApplyJob";
+import Login from "./Login";
+import Signup from "./Signup";
+import Contact from "./Contact";
 
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [page, setPage] = useState("landing");
 
   // PRODUCT STATES
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -22,110 +26,150 @@ export default function App() {
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
 
-  // CAREER STATES
+  // CAREER STATE
   const [selectedJob, setSelectedJob] = useState(null);
+
+  // 🔥 ROUTES WHERE NAVBAR & FOOTER SHOULD BE HIDDEN
+  const hideLayoutRoutes = ["/login", "/signup"];
+  const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   return (
     <>
-      {/* ================= NAVBAR ================= */}
-      {page !== "landing" && (
+      {/* ✅ CONDITIONAL NAVBAR */}
+      {!shouldHideLayout && (
         <Navbar
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
-          setPage={setPage}
           setSelectedCategory={setSelectedCategory}
         />
       )}
 
-      {/* ================= LANDING ================= */}
-      {page === "landing" && (
-        <LandingPage
-          goToProducts={() => setPage("products")}
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-          setPage={setPage}
+      <Routes>
+
+        {/* ================= LANDING ================= */}
+        <Route
+          path="/"
+          element={
+            <LandingPage
+              goToProducts={() => navigate("/products")}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+            />
+          }
         />
-      )}
 
-      {/* ================= PRODUCT LIST ================= */}
-      {page === "products" && (
-        <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
-          <Sidebar
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            priceRange={priceRange}
-            setPriceRange={setPriceRange}
-            selectedPriceRanges={selectedPriceRanges}
-            setSelectedPriceRanges={setSelectedPriceRanges}
-          />
+        {/* ================= PRODUCTS ================= */}
+        <Route
+          path="/products"
+          element={
+            <div style={{ display: "flex", gap: 32 }}>
+              <Sidebar
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                selectedPriceRanges={selectedPriceRanges}
+                setSelectedPriceRanges={setSelectedPriceRanges}
+              />
 
-          <div style={{ flex: 1 }}>
-            <ProductList
-              selectedCategory={selectedCategory}
-              priceRange={priceRange}
-              selectedPriceRanges={selectedPriceRanges}
-              onSelectProduct={(product) => {
-                setSelectedProduct(product);
-                setPage("detail");
+              <div style={{ flex: 1 }}>
+                <ProductList
+                  selectedCategory={selectedCategory}
+                  priceRange={priceRange}
+                  selectedPriceRanges={selectedPriceRanges}
+                  onSelectProduct={(product) => {
+                    setSelectedProduct(product);
+                    navigate("/product");
+                  }}
+                />
+              </div>
+            </div>
+          }
+        />
+
+        {/* ================= PRODUCT DETAIL ================= */}
+        <Route
+          path="/product"
+          element={
+            selectedProduct ? (
+              <ProductDetail
+                product={selectedProduct}
+                isLoggedIn={isLoggedIn}
+                onBack={() => navigate("/products")}
+              />
+            ) : (
+              <div style={{ padding: 40 }}>
+                No product selected
+              </div>
+            )
+          }
+        />
+
+        {/* ================= LOGIN ================= */}
+        <Route
+          path="/login"
+          element={
+            <Login
+              onLogin={() => {
+                setIsLoggedIn(true);
+                navigate("/products");
               }}
             />
-          </div>
-        </div>
-      )}
-
-      {/* ================= PRODUCT DETAIL ================= */}
-      {page === "detail" && selectedProduct && (
-        <ProductDetail
-          product={selectedProduct}
-          isLoggedIn={isLoggedIn}
-          onBack={() => {
-            setSelectedProduct(null);
-            setPage("products");
-          }}
+          }
         />
-      )}
 
-      {/* ================= SIGNUP ================= */}
-      {page === "signup" && (
-        <Signup onSignup={() => setPage("login")} />
-      )}
-
-      {/* ================= LOGIN ================= */}
-      {page === "login" && !isLoggedIn && (
-        <Login
-          onLogin={() => {
-            setIsLoggedIn(true);
-            setPage("products");
-          }}
+        {/* ================= SIGNUP ================= */}
+        <Route
+          path="/signup"
+          element={<Signup />}
         />
-      )}
 
-      {/* ================= COMPANY DETAILS ================= */}
-      {page === "company" && <CompanyDetails />}
-
-      {/* ================= CAREERS ================= */}
-      {page === "careers" && (
-        <Careers
-          onApply={(job) => {
-            setSelectedJob(job);
-            setPage("apply-job");
-          }}
+        {/* ================= COMPANY ================= */}
+        <Route
+          path="/company"
+          element={<CompanyDetails />}
         />
-      )}
 
-      {/* ================= APPLY JOB PAGE ================= */}
-      {page === "apply-job" && selectedJob && (
-        <ApplyJob
-          job={selectedJob}
-          onBack={() => {
-            setSelectedJob(null);
-            setPage("careers");
-          }}
+        {/* ================= CAREERS ================= */}
+        <Route
+          path="/careers"
+          element={
+            <Careers
+              onApply={(job) => {
+                setSelectedJob(job);
+                navigate("/apply-job");
+              }}
+            />
+          }
         />
-      )}
 
-      {/* ================= FOOTER ================= */}
-      <Footer page={page} setPage={setPage} />
+        {/* ================= APPLY JOB ================= */}
+        <Route
+          path="/apply-job"
+          element={
+            selectedJob ? (
+              <ApplyJob
+                job={selectedJob}
+                onBack={() => navigate("/careers")}
+              />
+            ) : (
+              <div style={{ padding: 40 }}>
+                No job selected
+              </div>
+            )
+          }
+        />
+
+        {/* ================= CONTACT ================= */}
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
+
+      </Routes>
+
+      {/* ✅ CONDITIONAL FOOTER */}
+      {!shouldHideLayout && <Footer />}
     </>
   );
 }

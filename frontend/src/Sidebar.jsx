@@ -132,9 +132,7 @@ const styles = {
     gap: 20,
     padding: 12,
     boxSizing: "border-box",
-    position: "sticky",
-    top: 96,
-    /* allow the sidebar to grow with the page; remove internal scrolling */
+    /* Removed sticky positioning to scroll with products */
     alignSelf: "flex-start",
   },
   card: {
