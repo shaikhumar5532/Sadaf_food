@@ -23,7 +23,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     if (!product && id) {
-      axios.get("http://localhost:5000/api/products")
+      axios.get("https://sadaf-food.onrender.com/api/products")
         .then(res => {
           const found = res.data.find(p => p._id === id);
           if (found) setProduct(found);
@@ -44,7 +44,7 @@ export default function ProductDetails() {
   const handleInquirySubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/contacts", {
+      await axios.post("https://sadaf-food.onrender.com/api/contacts", {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,

@@ -26,7 +26,7 @@ export default function Careers() {
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/jobs");
+      const res = await axios.get("https://sadaf-food.onrender.com/api/jobs");
       setJobs(res.data);
       setFilteredJobs(res.data);
     } catch (err) {
@@ -46,7 +46,7 @@ export default function Careers() {
   const handleApplySubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/apply", {
+      await axios.post("https://sadaf-food.onrender.com/api/apply", {
         name: formData.name,
         email: formData.email,
         resumeLink: formData.resumeLink,

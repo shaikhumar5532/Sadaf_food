@@ -32,11 +32,11 @@ export default function Products() {
     const localWish = localStorage.getItem("wishlist");
     if (localWish) setWishlist(JSON.parse(localWish));
 
-    axios.get("http://localhost:5000/api/categories")
+    axios.get("https://sadaf-food.onrender.com/api/categories")
       .then(res => setCategories(res.data))
       .catch(err => console.error("Error categories:", err));
 
-    axios.get("http://localhost:5000/api/products")
+    axios.get("https://sadaf-food.onrender.com/api/products")
       .then(res => setProducts(res.data))
       .catch(err => console.error("Error products:", err));
   }, []);

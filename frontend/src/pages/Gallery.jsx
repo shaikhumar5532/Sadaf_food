@@ -8,7 +8,7 @@ export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/gallery")
+    axios.get("https://sadaf-food.onrender.com/api/gallery")
       .then(res => setItems(res.data))
       .catch(err => console.error("Error fetching gallery:", err));
   }, []);

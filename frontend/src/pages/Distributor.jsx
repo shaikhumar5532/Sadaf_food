@@ -17,7 +17,7 @@ export default function Distributor() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/distributors", formData);
+      await axios.post("https://sadaf-food.onrender.com/api/distributors", formData);
       setSuccess(true);
       setFormData({
         companyName: "",

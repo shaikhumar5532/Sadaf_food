@@ -13,7 +13,7 @@ export default function Signup() {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", formData);
+      const res = await axios.post("https://sadaf-food.onrender.com/api/auth/signup", formData);
       if (res.data.success) {
         setSuccess(true);
         localStorage.setItem("token", res.data.token);

@@ -38,19 +38,19 @@ export default function AdminDashboard() {
 
   const fetchOverviewData = async () => {
     try {
-      const pRes = await axios.get("http://localhost:5000/api/products");
+      const pRes = await axios.get("https://sadaf-food.onrender.com/api/products");
       setProducts(pRes.data);
 
-      const jRes = await axios.get("http://localhost:5000/api/jobs");
+      const jRes = await axios.get("https://sadaf-food.onrender.com/api/jobs");
       setJobs(jRes.data);
 
-      const aRes = await axios.get("http://localhost:5000/api/applications", apiHeaders);
+      const aRes = await axios.get("https://sadaf-food.onrender.com/api/applications", apiHeaders);
       setApplications(aRes.data);
 
-      const mRes = await axios.get("http://localhost:5000/api/contacts", apiHeaders);
+      const mRes = await axios.get("https://sadaf-food.onrender.com/api/contacts", apiHeaders);
       setMessages(mRes.data);
 
-      const dRes = await axios.get("http://localhost:5000/api/distributors", apiHeaders);
+      const dRes = await axios.get("https://sadaf-food.onrender.com/api/distributors", apiHeaders);
       setDistributors(dRes.data);
     } catch (err) {
       console.error("Error loading dashboard metrics:", err);
@@ -78,9 +78,9 @@ export default function AdminDashboard() {
     e.preventDefault();
     try {
       if (editingProdId) {
-        await axios.put(`http://localhost:5000/api/products/${editingProdId}`, prodForm, apiHeaders);
+        await axios.put(`https://sadaf-food.onrender.com/api/products/${editingProdId}`, prodForm, apiHeaders);
       } else {
-        await axios.post("http://localhost:5000/api/products", prodForm, apiHeaders);
+        await axios.post("https://sadaf-food.onrender.com/api/products", prodForm, apiHeaders);
       }
       setProdForm({ name: "", category: "Grains", price: "", image: "", description: "" });
       setEditingProdId(null);
@@ -104,7 +104,7 @@ export default function AdminDashboard() {
   const handleProductDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, apiHeaders);
+      await axios.delete(`https://sadaf-food.onrender.com/api/products/${id}`, apiHeaders);
       fetchOverviewData();
     } catch (err) {
       alert("Delete product failed.");
@@ -115,7 +115,7 @@ export default function AdminDashboard() {
   const handleJobSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/jobs", jobForm, apiHeaders);
+      await axios.post("https://sadaf-food.onrender.com/api/jobs", jobForm, apiHeaders);
       setJobForm({ title: "", location: "", type: "Full-Time", description: "" });
       fetchOverviewData();
     } catch (err) {
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
   const handleJobDelete = async (id) => {
     if (!window.confirm("Delete this career listing?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/jobs/${id}`, apiHeaders);
+      await axios.delete(`https://sadaf-food.onrender.com/api/jobs/${id}`, apiHeaders);
       fetchOverviewData();
     } catch (err) {
       alert("Delete job failed.");
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
   // --- DISTRIBUTORS HANDLERS ---
   const updateDistributorStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/distributors/${id}/status`, { status }, apiHeaders);
+      await axios.put(`https://sadaf-food.onrender.com/api/distributors/${id}/status`, { status }, apiHeaders);
       fetchOverviewData();
     } catch (err) {
       alert("Status update failed.");

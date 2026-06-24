@@ -20,15 +20,15 @@ export default function Home() {
 
   useEffect(() => {
     // Fetch Products, Testimonials, News
-    axios.get("http://localhost:5000/api/products")
+    axios.get("https://sadaf-food.onrender.com/api/products")
       .then(res => setProducts(res.data.slice(0, 4)))
       .catch(err => console.error("Error fetching products:", err));
 
-    axios.get("http://localhost:5000/api/testimonials")
+    axios.get("https://sadaf-food.onrender.com/api/testimonials")
       .then(res => setTestimonials(res.data))
       .catch(err => console.error("Error fetching testimonials:", err));
 
-    axios.get("http://localhost:5000/api/news")
+    axios.get("https://sadaf-food.onrender.com/api/news")
       .then(res => setNews(res.data.slice(0, 3)))
       .catch(err => console.error("Error fetching news:", err));
 
