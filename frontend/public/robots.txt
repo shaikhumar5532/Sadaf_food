@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sfppl.vercel.app/sitemap.xml
