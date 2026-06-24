@@ -469,28 +469,28 @@ async function seedDatabase() {
           name: "Fresh Shahi Litchi",
           category: "Litchi",
           price: 150,
-          image: "https://images.unsplash.com/photo-1628294895522-fd3f2c5ebd7e?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600",
           description: "Sweet Shahi Litchis harvested daily from our organic orchards in Muzaffarpur, Bihar."
         },
         {
           name: "Shahi Litchi Pulp / Juice",
           category: "Litchi",
           price: 95,
-          image: "https://images.unsplash.com/photo-1589733901241-5e5148685df5?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=600",
           description: "Pure Shahi Litchi nectar, zero artificial sugar, pasteurized for safety."
         },
         {
           name: "Premium Litchi Honey",
           category: "Litchi",
           price: 280,
-          image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1505253211303-2bb5d2f7bba1?q=80&w=600",
           description: "100% natural raw honey harvested from honeybees feeding exclusively in litchi orchards."
         },
         {
           name: "Sun-Dried Dehydrated Litchi",
           category: "Litchi",
           price: 320,
-          image: "https://images.unsplash.com/photo-1596003906949-67221c37965c?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=600",
           description: "Naturally dehydrated sweet litchi nuts, an export-grade local delicacy."
         },
 
@@ -499,28 +499,28 @@ async function seedDatabase() {
           name: "Premium Organic Makhana (Fox Nuts)",
           category: "Makhana",
           price: 450,
-          image: "https://images.unsplash.com/photo-1608797178974-15b35a61d121?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=600",
           description: "Crispy and highly nutritious grade-A fox nuts, carefully handpicked and processed."
         },
         {
           name: "Spiced Roasted Makhana",
           category: "Makhana",
           price: 120,
-          image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600",
           description: "Healthy snacks roasted in native cow ghee and coated with natural spices."
         },
         {
           name: "Chocolate Coated Sweet Makhana",
           category: "Makhana",
           price: 160,
-          image: "https://images.unsplash.com/photo-1548907040-4d42b521a5e0?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1505253211303-2bb5d2f7bba1?q=80&w=600",
           description: "Puffed makhanas covered in premium dark chocolate glaze for a healthy sweet treat."
         },
         {
           name: "Himalayan Pink Salt Makhana",
           category: "Makhana",
           price: 110,
-          image: "https://images.unsplash.com/photo-1608797178974-15b35a61d121?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1516684669134-de6e4e3d7f0b?q=80&w=600",
           description: "Crisp puffed fox nuts salted lightly with handground Himalayan pink mineral salt."
         },
 
@@ -529,28 +529,28 @@ async function seedDatabase() {
           name: "Fresh Rohu Fish",
           category: "Fish",
           price: 220,
-          image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=600",
           description: "Freshwater Rohu fish harvested daily from our bio-floc aquaculture ponds."
         },
         {
           name: "Fresh Katla Fish",
           category: "Fish",
           price: 260,
-          image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600",
           description: "Freshwater Katla fish, packed in clean ice for safe transit."
         },
         {
           name: "Boneless Fish Fillets (Rohu)",
           category: "Fish",
           price: 350,
-          image: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1514516870920-7008a46328fd?q=80&w=600",
           description: "Cleaned, deboned skinless freshwater Rohu fillets ready for culinary preparation."
         },
         {
           name: "Freshwater Prawns (Jhinga)",
           category: "Fish",
           price: 490,
-          image: "https://images.unsplash.com/photo-1559737605-de68b2d463d1?q=80&w=600",
+          image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600",
           description: "Aquaculture fresh river prawns harvested daily under strict quality controls."
         }
       ]);

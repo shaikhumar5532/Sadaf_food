@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { FaShieldAlt, FaAward, FaTruck, FaGlobe, FaChevronRight, FaPlay, FaSeedling, FaCogs, FaBoxOpen, FaClipboardCheck } from "react-icons/fa";
 
+const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600";
+
 export default function Home() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);

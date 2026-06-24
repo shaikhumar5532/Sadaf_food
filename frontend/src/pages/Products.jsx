@@ -4,6 +4,30 @@ import { FaSearch, FaList, FaTh, FaHeart, FaExchangeAlt, FaTimes, FaFilter } fro
 import axios from "axios";
 
 const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600";
+const PRODUCT_IMAGE_OVERRIDES = {
+  "Fresh Shahi Litchi": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600",
+  "Shahi Litchi Pulp / Juice": "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=600",
+  "Premium Litchi Honey": "https://images.unsplash.com/photo-1505253211303-2bb5d2f7bba1?q=80&w=600",
+  "Sun-Dried Dehydrated Litchi": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?q=80&w=600",
+  "Premium Organic Makhana (Fox Nuts)": "https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=600",
+  "Spiced Roasted Makhana": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600",
+  "Chocolate Coated Sweet Makhana": "https://images.unsplash.com/photo-1514516870920-7008a46328fd?q=80&w=600",
+  "Himalayan Pink Salt Makhana": "https://images.unsplash.com/photo-1516684669134-de6e4e3d7f0b?q=80&w=600",
+  "Fresh Rohu Fish": "https://images.unsplash.com/photo-1473093226795-af9932fe5856?q=80&w=600",
+  "Fresh Katla Fish": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600",
+  "Boneless Fish Fillets (Rohu)": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600",
+  "Freshwater Prawns (Jhinga)": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600"
+};
+
+const CATEGORY_IMAGE_FALLBACKS = {
+  Litchi: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=600",
+  Makhana: "https://images.unsplash.com/photo-1576714730283-6fe47389d7da?q=80&w=600",
+  Fish: "https://images.unsplash.com/photo-1547592180-69813f3df7d5?q=80&w=600"
+};
+
+const getProductImage = (product) => {
+  return PRODUCT_IMAGE_OVERRIDES[product.name] || product.image || CATEGORY_IMAGE_FALLBACKS[product.category] || DEFAULT_PRODUCT_IMAGE;
+};
 
 export default function Products() {
   const navigate = useNavigate();
@@ -233,7 +257,7 @@ export default function Products() {
                     <div key={prod._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:translate-y-[-4px] transition-all flex flex-col justify-between">
                       <div className="relative bg-slate-100 h-48 overflow-hidden">
                         <img
-                          src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                          src={getProductImage(prod)}
                           alt={prod.name}
                           onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                           className="w-full h-full object-cover"
@@ -290,7 +314,7 @@ export default function Products() {
                     <div key={prod._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all p-5 flex flex-col sm:flex-row gap-6">
                       <div className="relative bg-slate-100 w-full sm:w-48 h-36 rounded-xl overflow-hidden shrink-0">
                         <img
-                          src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                          src={getProductImage(prod)}
                           alt={prod.name}
                           onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                           className="w-full h-full object-cover"
@@ -386,7 +410,7 @@ export default function Products() {
               {compareList.map(prod => (
                 <div key={prod._id} className="relative bg-slate-50 border border-gray-100 p-2.5 rounded-xl flex items-center space-x-2">
                   <img
-                    src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                    src={getProductImage(prod)}
                     alt={prod.name}
                     onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                     className="w-10 h-10 object-cover rounded-lg"
