@@ -3,6 +3,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FaSearch, FaList, FaTh, FaHeart, FaExchangeAlt, FaTimes, FaFilter } from "react-icons/fa";
 import axios from "axios";
 
+const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600";
+
 export default function Products() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -230,7 +232,12 @@ export default function Products() {
                   return (
                     <div key={prod._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:translate-y-[-4px] transition-all flex flex-col justify-between">
                       <div className="relative bg-slate-100 h-48 overflow-hidden">
-                        <img src={prod.image} alt={prod.name} className="w-full h-full object-cover" />
+                        <img
+                          src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                          alt={prod.name}
+                          onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
+                          className="w-full h-full object-cover"
+                        />
                         <span className="absolute top-3 left-3 bg-brand-primary text-white text-[10px] px-2.5 py-1 rounded-full font-bold uppercase">
                           {prod.category}
                         </span>
@@ -282,7 +289,12 @@ export default function Products() {
                   return (
                     <div key={prod._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all p-5 flex flex-col sm:flex-row gap-6">
                       <div className="relative bg-slate-100 w-full sm:w-48 h-36 rounded-xl overflow-hidden shrink-0">
-                        <img src={prod.image} alt={prod.name} className="w-full h-full object-cover" />
+                        <img
+                          src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                          alt={prod.name}
+                          onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       
                       <div className="flex-1 flex flex-col justify-between">
@@ -373,7 +385,12 @@ export default function Products() {
             <div className="grid grid-cols-3 gap-4 w-full md:w-auto flex-1 max-w-xl">
               {compareList.map(prod => (
                 <div key={prod._id} className="relative bg-slate-50 border border-gray-100 p-2.5 rounded-xl flex items-center space-x-2">
-                  <img src={prod.image} alt={prod.name} className="w-10 h-10 object-cover rounded-lg" />
+                  <img
+                    src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                    alt={prod.name}
+                    onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
+                    className="w-10 h-10 object-cover rounded-lg"
+                  />
                   <span className="text-[11px] font-semibold text-slate-700 truncate block flex-1">{prod.name}</span>
                   <button
                     onClick={() => toggleCompare(prod)}

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FaBoxes, FaBriefcase, FaUserCheck, FaEnvelopeOpen, FaStore, FaLock, FaTachometerAlt } from "react-icons/fa";
 import axios from "axios";
 
+const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600";
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -325,7 +327,14 @@ export default function AdminDashboard() {
                   <tbody className="divide-y divide-gray-50 text-slate-700">
                     {products.map(prod => (
                       <tr key={prod._id}>
-                        <td className="py-3"><img src={prod.image} className="w-9 h-9 object-cover rounded-lg" /></td>
+                        <td className="py-3">
+                          <img
+                            src={prod.image || DEFAULT_PRODUCT_IMAGE}
+                            alt={prod.name}
+                            onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
+                            className="w-9 h-9 object-cover rounded-lg"
+                          />
+                        </td>
                         <td className="py-3 font-bold">{prod.name}</td>
                         <td className="py-3">{prod.category}</td>
                         <td className="py-3 font-bold text-brand-primary">₹ {prod.price}</td>

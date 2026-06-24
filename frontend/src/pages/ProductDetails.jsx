@@ -3,6 +3,8 @@ import { useLocation, useParams, useNavigate, Link } from "react-router-dom";
 import { FaChevronLeft, FaFilePdf, FaLeaf, FaShieldAlt, FaSync } from "react-icons/fa";
 import axios from "axios";
 
+const DEFAULT_PRODUCT_IMAGE = "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=600";
+
 export default function ProductDetails() {
   const { id } = useParams();
   const location = useLocation();
@@ -95,8 +97,9 @@ export default function ProductDetails() {
               onClick={() => setZoomScale(!zoomScale)}
             >
               <img
-                src={product.image}
+                src={product.image || DEFAULT_PRODUCT_IMAGE}
                 alt={product.name}
+                onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                 className={`w-full h-[400px] object-cover rounded-2xl transition-transform duration-300 ${zoomScale ? "scale-125" : "scale-100"}`}
               />
               <div className="absolute bottom-6 left-6 bg-black/40 backdrop-blur-sm px-4 py-1.5 rounded-full text-white text-xs font-medium">

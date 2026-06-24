@@ -269,8 +269,9 @@ export default function Home() {
               >
                 <div className="h-52 bg-slate-100 overflow-hidden relative group">
                   <img
-                    src={prod.image}
+                    src={prod.image || DEFAULT_PRODUCT_IMAGE}
                     alt={prod.name}
+                    onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3 bg-brand-primary text-white text-xs px-3 py-1.5 rounded-full font-bold">
@@ -405,8 +406,9 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="h-72 md:h-full bg-slate-100">
                   <img
-                    src={quickViewProduct.image}
+                    src={quickViewProduct.image || DEFAULT_PRODUCT_IMAGE}
                     alt={quickViewProduct.name}
+                    onError={(e) => { e.currentTarget.src = DEFAULT_PRODUCT_IMAGE; }}
                     className="w-full h-full object-cover"
                   />
                 </div>
